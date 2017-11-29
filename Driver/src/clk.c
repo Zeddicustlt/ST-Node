@@ -9,18 +9,15 @@
 #include "clk.h"
 
 
-//设置外部时钟为主时钟 
-//输入参数：无
-//输出参数：无
+/*Настройка HSE*/
 void Set_HSE(void)  
 {
-  //CLK_DeInit();     //恢复默认设置 
-  CLK_HSECmd(ENABLE);   //外部时钟开
-  while(SET != CLK_GetFlagStatus(CLK_FLAG_HSERDY)); //等待外部时钟稳定
-  CLK_SYSCLKConfig(CLK_PRESCALER_CPUDIV1);  //不分频
-  CLK_ClockSwitchCmd(ENABLE);   //时钟切换使能
-  //切换配置
-  CLK_ClockSwitchConfig(CLK_SWITCHMODE_AUTO,CLK_SOURCE_HSE,DISABLE,CLK_CURRENTCLOCKSTATE_ENABLE);
+  //CLK_DeInit();     //По какой то причине камень останавли 
+  CLK_HSECmd(ENABLE);   //Включаем HSE
+  while(SET != CLK_GetFlagStatus(CLK_FLAG_HSERDY)); //Проверяем, готов ли контроллер переключиться на HSE
+  CLK_SYSCLKConfig(CLK_PRESCALER_CPUDIV1);  //Прескалер
+  CLK_ClockSwitchCmd(ENABLE);   //Разрешаем смену источника тактирования
+  CLK_ClockSwitchConfig(CLK_SWITCHMODE_AUTO,CLK_SOURCE_HSE,DISABLE,CLK_CURRENTCLOCKSTATE_ENABLE); //Конфигурируем HSE
 }
 
 //设置内部时钟16M为主时钟 
